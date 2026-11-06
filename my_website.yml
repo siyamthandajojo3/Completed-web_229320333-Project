@@ -1,0 +1,30 @@
+---
+- hosts: webservers
+  become: true 
+  
+  
+  
+  
+  tasks:
+  
+    - name: Copy Dockerfile and website folder to server
+      ansible.builtin.copy: 
+            src: ./
+            dest: /home/devsac
+    - name: Build Docker Imange
+      command: docker build -t web_229320333 /home/devasc/229320333
+    - name: Run Docker Container
+      command docker run -t -d -p 8085:80 -- name site_229320333
+  
+  
+   - name: Create Dockerfile
+        copy:
+            FROM httpd: alpine
+            copy: ./ansible/web_229320333/my_website.yml usr/local/apache2/htdocs/
+            dest: '/home/devasc/229320333/Dockerfile'
+            content: |
+                 FROM nginx:alpine
+                 COPY ./index.html /usr/share/nginx/html/index.html
+                 EXPOSE 80
+            mode: '0644'
+                CMD ["httpd-foreground"]
